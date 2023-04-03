@@ -1,4 +1,6 @@
 import type { Mode } from "./types";
+import type { Customer } from "./types";
+const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 /**
  * Economic fetch customerdata
@@ -14,8 +16,16 @@ export default { fetchCustomerData };
  * @returns A Promise that resolves with the customer data object.
  */
 async function fetchCustomerData(
-  customerId: String,
+  customerId: string,
   mode: Mode
-) {
-  throw new Error("Not implemented");
+): Promise<Customer> {
+  await delay(5000);
+  return {
+    name: "Søren",
+    address: "Lollandsgade 62, 8000 Aarhus C",
+    phone: "24638952",
+    mail: "soeren@novasolar.dk",
+    date: "99/99/9999",
+    time: "22:00 - 23:30",
+  };
 }
