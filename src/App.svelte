@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { getMail, getSms} from "./lib/webinterface";
+  import sms from "./lib/sms";
+  import email from "./lib/email"
   import type { Customer as CustomerType, Mode } from "./lib/types";
   import b from "./lib/economic"
   import ModeSelection from "./ModeSelection.svelte";
@@ -53,14 +54,14 @@
   {#await currentCustomer then currentCustomer}
     <div class="col-3">
       {#if smsToggle}
-        {#await getSms("serviceMode", currentCustomer)}
+        {#await sms.get("serviceMode", currentCustomer)}
           <p>loading...</p>
         {:then sms}
           <Sms text={sms} />
         {/await}
       {/if}
       {#if mailToggle}
-        {#await getMail("hej")}
+        {#await email.get("serviceMode", currentCustomer)}
           <p>loading...</p>
         {:then mail}
           <div class="frameMail">{@html mail}</div>

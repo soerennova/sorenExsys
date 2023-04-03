@@ -1,12 +1,16 @@
+import Handlebars from 'handlebars';
 import type {Customer, Mode} from './types'
+import util from './util'
 
-const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
-export async function getMail(templateId: string): Promise<string> {
-  await delay(5000);
-  return `<html>
+
+export async function get(mode: Mode, customerData: Customer): Promise<string> {
+  await util.delay(5000);
+
+    // compile the template
+    var template = Handlebars.compile(`<html>
     <head>
-        <title>Køb af varmepumpe hos NovaSolar  søren test</title>
+        <title>Køb af varmepumpe hos NovaSolar</title>
     </head>
     
     <body>
@@ -63,19 +67,11 @@ export async function getMail(templateId: string): Promise<string> {
         </div>
     </body>
     
-    </html>`;
+    </html>`);
+    // execute the compiled template and print the output to the console
+    template({ doesWhat: "rocks!" });
+    
+    return template(customerData);
 }
 
-export async function getSms(
-  mode: Mode,
-  customer: Customer
-): Promise<string> {
-  await delay(5000);
-  return `Hej ${customer.name}
-  ${customer.address}
-  ${customer.phone}
-  ${customer.mail}
-  ${customer.date}
-  ${customer.time}
-  `;
-}
+export default{get}
