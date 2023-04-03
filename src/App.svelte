@@ -1,11 +1,13 @@
 <script lang="ts">
-  import { getMail, getSms, getCustomer } from "./lib/webinterface";
-  import type { Customer as CustomerType } from "./lib/types";
+  import { getMail, getSms} from "./lib/webinterface";
+  import type { Customer as CustomerType, Mode } from "./lib/types";
+  import b from "./lib/economic"
   import ModeSelection from "./ModeSelection.svelte";
   import Customer from "./Customer.svelte";
   import Sms from "./lib/Sms.svelte";
+  import type economic from "./lib/economic";
 
-  let currentMode = "";
+  let currentMode: Mode = "serviceMode";
   let smsToggle: boolean;
   let mailToggle: boolean;
   let customerNumber = "";
@@ -32,7 +34,7 @@
       on:keydown={(e) => {
         if (e.key === "Enter") {
           showDiv2 = true;
-          currentCustomer = getCustomer(customerNumber);
+          currentCustomer = b.fetchCustomerData(customerNumber, currentMode);
         }
       }}
     />
@@ -97,13 +99,6 @@
     padding: 10px;
     padding-left: 30px;
     display: inline-flex;
-  }
-
-  /* The switch - the box around the slider */
-
-  .frameSms {
-    padding: 5px;
-    width: 20%;
   }
 
   .frameMail {

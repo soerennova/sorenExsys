@@ -1,29 +1,18 @@
-<script>
-  export let currentMode = "";
+<script lang="ts">
+  import { type Mode, modes } from "./lib/types";
 
-  $:{console.log(currentMode)};
-  function setMode(mode) {
+  export let currentMode: Mode;
+
+  function setMode(mode: Mode) {
     currentMode = mode;
   }
-
 </script>
-
+{#each modes as {mode, name}}
 <button
-  class:selected={currentMode === "ServiceMode"}
-  on:click={()=> setMode("ServiceMode")}>SERVICE</button
+  class:selected={currentMode === mode}
+  on:click={() => setMode(mode)}>{name}</button
 >
-<button  class:selected={currentMode === "MontageMode"}
-on:click={()=>setMode("MontageMode")}
-  >MONTAGE</button
->
-<button
-class:selected={currentMode === "Placeholder1Mode"}
-  on:click={()=>setMode("Placeholder1Mode")}>PLACEHOLDER1</button
->
-<button
-class:selected={currentMode === "Placeholder2Mode"}
-  on:click={()=>setMode("Placeholder2Mode")}>PLACEHOLDER2</button
->
+{/each}
 
 <style>
   .selected {
@@ -43,7 +32,7 @@ class:selected={currentMode === "Placeholder2Mode"}
     padding: 10px;
     margin-top: 40px;
     text-align: center;
-    background-color: #4CAF50;
+    background-color: #4caf50;
     color: white;
     border: none;
     border-radius: 4px;
@@ -53,6 +42,4 @@ class:selected={currentMode === "Placeholder2Mode"}
     font-family: monospace;
     font-size: 20px;
   }
-
-
 </style>

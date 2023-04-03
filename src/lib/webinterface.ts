@@ -66,18 +66,6 @@ export async function getMail(templateId: string): Promise<string> {
     </html>`;
 }
 
-export async function getCustomer(customerId: string): Promise<Customer> {
-  await delay(5000);
-  return {
-    name: "Søren",
-    address: "Lollandsgade 62, 8000 Aarhus C",
-    phone: "24638952",
-    mail: "soeren@novasolar.dk",
-    date: "99/99/9999",
-    time: "22:00 - 23:30",
-  };
-}
-
 export async function getSms(
   mode: Mode,
   customer: Customer
