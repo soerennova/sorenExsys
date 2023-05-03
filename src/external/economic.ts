@@ -1,5 +1,5 @@
-import type { Mode } from "./types";
-import type { Customer } from "./types";
+import type { Mode } from "../lib/types";
+import type { Customer } from "../lib/types";
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 /**

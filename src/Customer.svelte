@@ -1,8 +1,23 @@
 <script lang="ts">
-  import type { Customer } from "./lib/types";
+  import { send } from "./lib/interactions";
+  import type { Customer, Mode } from "./lib/types";
   export let smsToggle: boolean;
   export let mailToggle: boolean;
   export let currentCustomer: Customer;
+  export let currentMode: Mode;
+  export let smsBody: string | undefined = undefined;
+  let done = false;
+  $: {
+    smsBody = smsBody;
+    mailToggle = mailToggle;
+    done = false;
+  }
+
+  $: {
+    if(!smsToggle){
+      smsBody = undefined;
+    }
+  }
 </script>
 
 <div class="col-2">
@@ -40,15 +55,22 @@
         <span class="slider round" />
       </label>
     </p>
-
-    <button class="buttonsend" on:click={() => {}}>SEND</button>
+    {#if done}
+    <h1>done!</h1>
+    {/if}
+    <button
+      class="buttonsend"
+      on:click={() =>
+        send({customer:currentCustomer, shouldSendMail: mailToggle, mode: currentMode, smsBody}).then(
+          () => (done = true)
+        )}>SEND</button
+    >
+    
   </ul>
 </div>
 
-
-
 <style>
-    .switch {
+  .switch {
     position: relative;
     display: inline-block;
     width: 60px;

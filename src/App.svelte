@@ -1,22 +1,24 @@
 <script lang="ts">
-  import sms from "./lib/sms";
-  import email from "./lib/email"
+  import sms from "./external/sms";
+  import email from "./external/email";
   import type { Customer as CustomerType, Mode } from "./lib/types";
-  import b from "./lib/economic"
+  import b from "./external/economic";
   import ModeSelection from "./ModeSelection.svelte";
   import Customer from "./Customer.svelte";
   import Sms from "./lib/Sms.svelte";
-  import type economic from "./lib/economic";
+  import type economic from "./external/economic";
+  import backend from "./external/interfaceCommunication";
+  import fillTemplate from "./lib/interactions";
 
-  let currentMode: Mode = "serviceMode";
+  let currentMode: Mode = "service";
   let smsToggle: boolean;
   let mailToggle: boolean;
   let customerNumber = "";
   let currentCustomer: Promise<CustomerType>;
   let showDiv2: boolean = false;
+  let smsBody: string | undefined = undefined;
 
-  function send() {}
-
+  backend.getCustomer("123123");
 </script>
 
 <head>
@@ -45,7 +47,7 @@
     {#await currentCustomer}
       <p>loading</p>
     {:then thisCustomer}
-      <Customer bind:smsToggle bind:mailToggle currentCustomer={thisCustomer} />
+      <Customer bind:smsToggle bind:mailToggle bind:currentMode bind:smsBody currentCustomer={thisCustomer} />
     {/await}
   {:else}
     <p>Skriv kundenummer</p>
@@ -54,14 +56,19 @@
   {#await currentCustomer then currentCustomer}
     <div class="col-3">
       {#if smsToggle}
-        {#await sms.get("serviceMode", currentCustomer)}
+        {#await fillTemplate(()=>sms.get(currentMode),currentCustomer)
+        .then((smsB)=> smsBody = smsB)}
           <p>loading...</p>
         {:then sms}
-          <Sms text={sms} />
+          <div
+            style="background-color: #007BFF; color: #FFF; border-radius: 10px; padding: 10px; display: inline; align-self: flex-start; margin-right: 5px;"
+          >
+            <Sms text={sms} />
+          </div>
         {/await}
       {/if}
       {#if mailToggle}
-        {#await email.get("serviceMode", currentCustomer)}
+        {#await fillTemplate(()=>email.get(currentMode),currentCustomer)}
           <p>loading...</p>
         {:then mail}
           <div class="frameMail">{@html mail}</div>

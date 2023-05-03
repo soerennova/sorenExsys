@@ -7,9 +7,10 @@ export interface Customer {
   time: string;
 }
 
-export type Mode = "serviceMode" | "montageMode";
+export type Mode = "service" | "firstService" | "montage";
 
 export const modes: Array<{ mode: Mode; name: String }> = [
-  { mode: "serviceMode", name: "SERVICE" },
-  { mode: "montageMode", name: "MONTAGE" },
+  { mode: "firstService", name: "FØRSTE SERVICE" },
+  { mode: "service", name: "SERVICE" },
+  { mode: "montage", name: "MONTAGE" },
 ];
