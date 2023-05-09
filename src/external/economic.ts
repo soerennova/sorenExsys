@@ -19,11 +19,11 @@ async function fetchCustomerData(
   customerId: string,
   mode: Mode
 ): Promise<Customer> {
-  await delay(5000);
+  await delay(500);
   return {
     name: "Søren",
     address: "Lollandsgade 62, 8000 Aarhus C",
-    phone: "24638952",
+    phone: "+4524638952",
     mail: "soeren@novasolar.dk",
     date: "99/99/9999",
     time: "22:00 - 23:30",
