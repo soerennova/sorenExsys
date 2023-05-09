@@ -21,11 +21,11 @@ async function fetchCustomerData(
 ): Promise<Customer> {
   await delay(500);
   return {
-    name: "Søren",
+    name: "Søren E Lorentzen",
     address: "Lollandsgade 62, 8000 Aarhus C",
     phone: "+4524638952",
     mail: "soeren@novasolar.dk",
-    date: "99/99/9999",
-    time: "22:00 - 23:30",
+    date: "10/12/2023",
+    time: "14:00 - 16:30",
   };
 }
